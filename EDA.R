@@ -47,6 +47,12 @@ winstreaks_grid <- data %>%
   pivot_wider(names_from = winner, values_from = count)
 winstreaks_grid
 
+#graph of player 1's wins - player 2's wins
+ggplot(data, aes(x = 1:nrow(data))) +
+  geom_line(aes(y = cumsum(winner == "Player 1") - cumsum(winner == "Player 2")), color = "blue") +
+  labs(title = "Cumulative Wins: Player 1 - Player 2", x = "Game Number", y = "Cumulative Wins Difference") +
+  theme_minimal()
+
 
 #tests
 chisq.test(table(lag(data$Player.1), data$Player.1))
