@@ -2,6 +2,7 @@ library(tidyverse)
 
 data <- read.csv("Games-Data.csv")
 
+#how many each player won
 win_counts <- data %>%
   mutate(
     winner = case_when(
@@ -17,5 +18,16 @@ win_counts <- data %>%
   ) %>%
   filter(winner != "Tie") %>%
   count(winner, name = "wins")
+paste("Player 1 wins:", win_counts$wins[win_counts$winner == "Player 1"])
+paste("Player 2 wins:", win_counts$wins[win_counts$winner == "Player 2"])
+paste("Ties:", nrow(data) - sum(win_counts$wins))
 
-win_counts
+
+
+#how many of each move each player made
+move_counts <- data %>%
+  pivot_longer(cols = c(Player.1, Player.2), names_to = "player", values_to = "move") %>%
+  count(player, move, name = "count")
+move_counts_grid <- move_counts %>%
+  pivot_wider(names_from = move, values_from = count, values_fill = 0)
+move_counts_grid
