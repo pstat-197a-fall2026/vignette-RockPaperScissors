@@ -1,6 +1,6 @@
 library(tidyverse)
 
-data <- read.csv("Games-Data.csv") %>%
+data <- read.csv("data/Games-Data.csv") %>%
   mutate(
     winner = case_when(
       Player.1 == Player.2 ~ "Tie",
